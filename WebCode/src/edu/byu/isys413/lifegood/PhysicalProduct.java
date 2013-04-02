@@ -7,10 +7,10 @@ import java.util.Date;
 
 /**
  * @author lifeisgood21
- *
+ * 
  */
-public class PhysicalProduct extends Product{
-	
+public class PhysicalProduct extends Product {
+
 	@BusinessObjectField
 	private String storeid;
 	@BusinessObjectField
@@ -31,7 +31,7 @@ public class PhysicalProduct extends Product{
 	private String type;
 	@BusinessObjectField
 	private double physicalproductcommissionrate;
-	
+
 	/**
 	 * constructor
 	 */
@@ -39,17 +39,17 @@ public class PhysicalProduct extends Product{
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * get Full commission rate
 	 */
-	public double getFullCommissionRate(){
+	public double getFullCommissionRate() {
 		ConceptualProduct CP = null;
 		try {
 			CP = BusinessObjectDAO.getInstance().searchForBO("ConceptualProduct", new SearchCriteria("id", this.getConceptualproductid()));
 		} catch (Exception e) {
-			System.out.println("Failed to get Conceptual Product Associated with This Physical Product "+ this.getId());
-		}		
+			System.out.println("Failed to get Conceptual Product Associated with This Physical Product " + this.getId());
+		}
 		fullcommissionrate = CP.getCommissionrate() + this.getPhysicalproductcommissionrate();
 		return fullcommissionrate;
 	}
@@ -62,7 +62,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param storeid the storeid to set
+	 * @param storeid
+	 *            the storeid to set
 	 */
 	public void setStoreid(String storeid) {
 		this.storeid = storeid;
@@ -77,7 +78,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param productname the productname to set
+	 * @param productname
+	 *            the productname to set
 	 */
 	public void setProductname(String productname) {
 		this.productname = productname;
@@ -92,7 +94,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param serialnumber the serialnumber to set
+	 * @param serialnumber
+	 *            the serialnumber to set
 	 */
 	public void setSerialnumber(String serialnumber) {
 		this.serialnumber = serialnumber;
@@ -107,7 +110,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param shelflocation the shelflocation to set
+	 * @param shelflocation
+	 *            the shelflocation to set
 	 */
 	public void setShelflocation(String shelflocation) {
 		this.shelflocation = shelflocation;
@@ -122,7 +126,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param datepurchased the datepurchased to set
+	 * @param datepurchased
+	 *            the datepurchased to set
 	 */
 	public void setDatepurchased(Date datepurchased) {
 		this.datepurchased = datepurchased;
@@ -137,7 +142,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param cost the cost to set
+	 * @param cost
+	 *            the cost to set
 	 */
 	public void setCost(double cost) {
 		this.cost = cost;
@@ -152,7 +158,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
@@ -167,7 +174,8 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -182,10 +190,10 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param physicalproductcommissionrate the physicalproductcommissionrate to set
+	 * @param physicalproductcommissionrate
+	 *            the physicalproductcommissionrate to set
 	 */
-	public void setPhysicalproductcommissionrate(
-			double physicalproductcommissionrate) {
+	public void setPhysicalproductcommissionrate(double physicalproductcommissionrate) {
 		this.physicalproductcommissionrate = physicalproductcommissionrate;
 		this.setDirty();
 	}
@@ -198,12 +206,12 @@ public class PhysicalProduct extends Product{
 	}
 
 	/**
-	 * @param conceptualproductid the conceptualproductid to set
+	 * @param conceptualproductid
+	 *            the conceptualproductid to set
 	 */
 	public void setConceptualproductid(String conceptualproductid) {
 		this.conceptualproductid = conceptualproductid;
 		this.setDirty();
 	}
-
 
 }

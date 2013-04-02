@@ -37,18 +37,17 @@ public class MyStuffMain {
 		}
 		Store store = null;
 		Employee employee = null;
-		
+
 		String username = LDAP.loginLDAPByu();
-		
-		try{
-		String id = "1";
-		store = BusinessObjectDAO.getInstance().read(id);
-		employee = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username));
-		}catch(Exception e){
+
+		try {
+			String id = "1";
+			store = BusinessObjectDAO.getInstance().read(id);
+			employee = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username));
+		} catch (Exception e) {
 			System.out.println("Get Store and Employee failed");
 		}
-		
-		
+
 		Label lblLogInInfo = new Label(shlMyStuffSystem, SWT.NONE);
 		lblLogInInfo.setAlignment(SWT.RIGHT);
 		lblLogInInfo.setLayoutData(new RowData(201, SWT.DEFAULT));
@@ -72,7 +71,7 @@ public class MyStuffMain {
 		empStoreButton.setText("Employee / Store");
 
 		Button productsButton = new Button(shlMyStuffSystem, SWT.NONE);
-		final AddProducts ap = new AddProducts(display);
+		final AddProducts ap = new AddProducts(display, store);
 		productsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -83,20 +82,19 @@ public class MyStuffMain {
 		productsButton.setText("Products");
 
 		Button salesButton = new Button(shlMyStuffSystem, SWT.NONE);
-		
+
 		final SalesProcessingWindow spw = new SalesProcessingWindow(display, employee, store);
 		salesButton.addSelectionListener(new SelectionAdapter() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				spw.open();
-				}
+			}
 		});
 		salesButton.setLayoutData(new RowData(183, 89));
 		salesButton.setText("Sales Processing");
 
-		Button updateGeneralLedgerButton = new Button(shlMyStuffSystem,
-				SWT.NONE);
+		Button updateGeneralLedgerButton = new Button(shlMyStuffSystem, SWT.NONE);
 		updateGeneralLedgerButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -107,7 +105,7 @@ public class MyStuffMain {
 					System.out.println("General Ledger Did not work.");
 				}
 				GL.updateGeneralLedger();
-				
+
 			}
 		});
 		updateGeneralLedgerButton.setLayoutData(new RowData(183, 89));
@@ -117,7 +115,7 @@ public class MyStuffMain {
 		payCommissions.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				Commission CO = null;
 				try {
 					CO = BusinessObjectDAO.getInstance().create("Commission");
@@ -125,51 +123,47 @@ public class MyStuffMain {
 					System.out.println("Commission Did not work.");
 				}
 				CO.calculateAndPayMonthEndCommissions();
-				
-				
+
 			}
 		});
 		payCommissions.setLayoutData(new RowData(183, 89));
 		payCommissions.setText("Pay Commissions");
-		
+
 		Button lateBatch = new Button(shlMyStuffSystem, SWT.NONE);
 		lateBatch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				Rental ren = null;
-				
+
 				try {
 					ren = BusinessObjectDAO.getInstance().create("Rental");
 				} catch (DataException e1) {
 					System.out.println("Commission Did not work.");
 				}
-				
+
 				ren.lateEmailBatch();
-				
-				
+
 			}
 		});
 		lateBatch.setLayoutData(new RowData(181, 87));
 		lateBatch.setText("Late Emails (overdue rentals)");
-		
+
 		Button tenDayLate = new Button(shlMyStuffSystem, SWT.NONE);
 		tenDayLate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				Rental ren = null;
-				
+
 				try {
 					ren = BusinessObjectDAO.getInstance().create("Rental");
 				} catch (DataException e1) {
 					System.out.println("Ten Day Commission Did not work.");
 				}
-				
+
 				ren.tenDayCharge();
-				
-				
-				
+
 			}
 		});
 		tenDayLate.setLayoutData(new RowData(180, 79));
@@ -183,5 +177,4 @@ public class MyStuffMain {
 			}
 		}
 	}
-
 }
