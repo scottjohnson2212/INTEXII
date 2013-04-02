@@ -1,5 +1,7 @@
 package edu.byu.isys413.lifegood;
 
+import java.util.Date;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -20,7 +22,7 @@ public class AddProducts extends Shell {
 	private Text cpAverageCost;
 	private Text cpCommissionRate;
 	private Text cpSKU;
-	private Text ppIDtext;
+	private Text ppCPID;
 	private Text ppStoreID;
 	private Text ppName;
 	private Text ppSerialNumber;
@@ -28,6 +30,8 @@ public class AddProducts extends Shell {
 	private Text ppCost;
 	private Text ppType;
 	private Text ppCommissionRate;
+	private Text cpPrice;
+	private Text ppPrice;
 
 	/**
 	 * Create the shell.
@@ -58,6 +62,15 @@ public class AddProducts extends Shell {
 				CP.setAveragecost(Double.parseDouble(cpAverageCost.getText()));
 				CP.setCommissionrate(Double.parseDouble(cpCommissionRate.getText()));
 				CP.setSku(cpSKU.getText());
+				CP.setType("Conceptual Product");
+				CP.setPrice(Double.parseDouble(cpPrice.getText()));
+				
+				try {
+					BusinessObjectDAO.getInstance().save(CP);
+				} catch (DataException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				
 								
@@ -72,6 +85,36 @@ public class AddProducts extends Shell {
 		lblNewLabel_5.setText("             ");
 		
 		Button btnAddPhysicalProduct = new Button(composite_1, SWT.NONE);
+		btnAddPhysicalProduct.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				PhysicalProduct PP = null;
+				try {
+					PP = BusinessObjectDAO.getInstance().create("physicalproduct");
+				} catch (DataException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				PP.setStoreid(ppStoreID.getText());
+				PP.setConceptualproductid(ppCPID.getText());
+				PP.setProductname(ppName.getText());
+				PP.setSerialnumber(ppSerialNumber.getText());
+				PP.setShelflocation(ppShelfLocation.getText());
+				PP.setCost(Double.parseDouble(ppCost.getText()));
+				PP.setStatus("Active");
+				PP.setType(ppType.getText());
+				PP.setPhysicalproductcommissionrate(Double.parseDouble(ppCommissionRate.getText()));
+				PP.setPrice(Double.parseDouble(ppPrice.getText()));
+				PP.setType("Physical Product");
+				
+				try {
+					BusinessObjectDAO.getInstance().save(PP);
+				} catch (DataException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnAddPhysicalProduct.setText("Add Physical Product");
 		
 		Composite composite_2 = new Composite(this, SWT.NONE);
@@ -131,6 +174,14 @@ public class AddProducts extends Shell {
 		
 		cpSKU = new Text(composite_8, SWT.BORDER);
 		
+		Composite composite_17 = new Composite(composite_2, SWT.NONE);
+		composite_17.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		Label lblPrice = new Label(composite_17, SWT.NONE);
+		lblPrice.setText("Price: ");
+		
+		cpPrice = new Text(composite_17, SWT.BORDER);
+		
 		Composite composite_3 = new Composite(this, SWT.NONE);
 		composite_3.setLayoutData(BorderLayout.EAST);
 		RowLayout rl_composite_3 = new RowLayout(SWT.VERTICAL);
@@ -146,7 +197,7 @@ public class AddProducts extends Shell {
 		Label cpID = new Label(composite_9, SWT.NONE);
 		cpID.setText("Conceptual Product ID:");
 		
-		ppIDtext = new Text(composite_9, SWT.BORDER);
+		ppCPID = new Text(composite_9, SWT.BORDER);
 		
 		Composite composite_10 = new Composite(composite_3, SWT.NONE);
 		composite_10.setLayout(new RowLayout(SWT.HORIZONTAL));
@@ -203,6 +254,14 @@ public class AddProducts extends Shell {
 		lblNewLabel_7.setText("Comission Rate: ");
 		
 		ppCommissionRate = new Text(composite_16, SWT.BORDER);
+		
+		Composite composite_18 = new Composite(composite_3, SWT.NONE);
+		composite_18.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		Label lblPrice_1 = new Label(composite_18, SWT.NONE);
+		lblPrice_1.setText("Price: ");
+		
+		ppPrice = new Text(composite_18, SWT.BORDER);
 		createContents();
 	}
 
