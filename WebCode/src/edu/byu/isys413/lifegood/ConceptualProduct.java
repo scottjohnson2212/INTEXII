@@ -151,6 +151,11 @@ public class ConceptualProduct extends Product {
 		this.setDirty();
 	}
 
+	public void addConceptualProduct() {
+		
+		
+	}
+
 	
 	
 

@@ -31,22 +31,6 @@ public class ConfirmPurchase implements Action{
 		//get customer information
 		
 		Customer cust = BusinessObjectDAO.getInstance().searchForBO("Customer", new SearchCriteria("email", custEmail));
-		
-		
-		//create html return for customer information
-		
-//		request.setAttribute("customer", "<div class='product_box'><form action='edu.byu.isys413.cca.actions.FinishTransaction.action'>" +
-//											"<div class='form_row'><label>First Name:</label> <input type='text' name='cust_firstname'value='"+cust.getFirstname()+"' readonly></div>" +
-//											"<div class='form_row'><label>Middle Name:</label> <input type='text' name='cust_middlename' value='"+cust.getMiddlename()+"' readonly></div>" +
-//											"<div class='form_row'><label>Last Name:</label> <input type='text' name='cust_lastname' value='"+cust.getLastname()+"' readonly></div>" +
-//											"<div class='form_row'><label>Phone:</label> <input type='text' name='cust_phone' value='"+cust.getPhone()+"' readonly></div>" +
-//											"<div class='form_row'><label>Shipping Address:</label> <input type='text' name='cust_address' value='"+cust.getAddress()+"' readonly></div>" +
-//											"<div class='form_row'><label>City:</label> <input type='text' name='cust_city' value='"+cust.getCity()+"' readonly></div>" +
-//											"<div class='form_row'><label>State:</label> <input type='text' name='cust_state' value='"+cust.getState()+"' readonly></div>" +
-//											"<div class='form_row'><label>Zip:</label> <input type='text' name='cust_zip' value='"+cust.getZip()+"' readonly></div>" +
-//											"<div class='form_row'><label>Email:</label> <input type='text' name='cust_email' value='"+cust.getEmail()+"' readonly></div>" +
-//											"<div class='form_row'><label>Store:</label> <input type='text' name='cust_store' value='"+request.getParameter("product_store")+"' readonly></div>" +
-//											"<input type='submit' value='Purchase' /></form></div>");
 	
 		//get purchase information
 		

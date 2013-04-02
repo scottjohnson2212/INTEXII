@@ -72,9 +72,11 @@ public class MyStuffMain {
 		empStoreButton.setText("Employee / Store");
 
 		Button productsButton = new Button(shlMyStuffSystem, SWT.NONE);
+		final AddProducts ap = new AddProducts(display);
 		productsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				ap.open();
 			}
 		});
 		productsButton.setLayoutData(new RowData(183, 89));
