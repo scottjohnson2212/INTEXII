@@ -26,7 +26,7 @@ public class MyStuffMain {
 	public static void main(String[] args) {
 
 		final Display display = Display.getDefault();
-		final Shell shlMyStuffSystem = new Shell();
+		final Shell shlMyStuffSystem = new Shell(SWT.APPLICATION_MODAL);
 		shlMyStuffSystem.setSize(389, 420);
 		shlMyStuffSystem.setText("My Stuff System");
 		shlMyStuffSystem.setLayout(new RowLayout(SWT.HORIZONTAL));
@@ -75,7 +75,9 @@ public class MyStuffMain {
 		productsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				shlMyStuffSystem.close();
 				ap.open();
+				
 			}
 		});
 		productsButton.setLayoutData(new RowData(183, 89));

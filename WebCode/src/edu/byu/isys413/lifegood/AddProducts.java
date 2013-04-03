@@ -113,6 +113,8 @@ public class AddProducts extends Shell {
 		btnReturnToMain.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				Shell shell = new Shell(SWT.APPLICATION_MODAL);
+				shell.open();
 				close();
 			}
 		});
