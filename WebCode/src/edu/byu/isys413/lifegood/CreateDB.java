@@ -35,7 +35,7 @@ import java.util.*;
 public class CreateDB {
 
     /** Set this to the full path of your file */
-    public static final String SQL_FILE = "C:/Programming/referenced_files/CreateDB.sql";
+    public static final String SQL_FILE = "ReferencedFiles/CreateDB.sql";
 
     /** Drops everything from the database and recreates it */
     public static void main(String args[]) throws Exception {
