@@ -1,6 +1,10 @@
 package edu.byu.isys413.lifegood;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.SWT;
@@ -12,6 +16,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.text.TextViewer;
 
 public class MyStuffMain {
@@ -35,19 +40,55 @@ public class MyStuffMain {
 		} catch (Exception e1) {
 			System.out.println("Create DB failed");
 		}
+		boolean loop = true;
+
 		Store store = null;
 		Employee employee = null;
+		String username = null;
 
-		final String username = LDAP.loginLDAPByu();
+		// Login Loop
+		while (loop) {
+			// Username Dialog
+			Shell shell = new Shell();
+			InputDialog message = new InputDialog(shell, "Login", "Username: ", "enter username here", null);
+			message.open();
+			username = message.getValue();
 
-		try {
-			String id = "1";
-			store = BusinessObjectDAO.getInstance().read(id);
-			employee = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username));
-		} catch (Exception e) {
-			System.out.println("Get Store and Employee failed");
+			// get the password
+			JPasswordField passwordField = new JPasswordField();
+			passwordField.setEchoChar('*');
+			Object[] obj = { "Please enter the password:\n\n", passwordField };
+			Object stringArray[] = { "OK", "Cancel" };
+			if (JOptionPane.showOptionDialog(null, obj, "Need password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, stringArray, obj) == JOptionPane.YES_OPTION)
+				;
+			String password = new String(passwordField.getPassword());
+
+			try {
+				String id = "1";
+				store = BusinessObjectDAO.getInstance().read(id);
+				employee = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username), new SearchCriteria("password", password));
+				
+				if(store == null || employee == null){
+					Shell shell2 = new Shell();
+					MessageBox message2 = new MessageBox(shell, SWT.ICON_WARNING);
+					message2.setText("Warning");
+					message2.setMessage("You must fill in all fields");
+					message2.open();
+				}else{
+					break;
+				}
+				
+				
+			} catch (Exception e) {
+				Shell shell1 = new Shell();
+				MessageBox message1 = new MessageBox(shell, SWT.ICON_WARNING);
+				message1.setText("Warning");
+				message1.setMessage("Login Failed Please Try Again");
+				message1.open();
+			}
 		}
-		
+
+		final String usernameToWorkWith = username;
 		final Store storeToWorkWith = store;
 
 		Label lblLogInInfo = new Label(shlMyStuffSystem, SWT.NONE);
@@ -92,13 +133,13 @@ public class MyStuffMain {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				Store store1 = null;
 				Employee employee1 = null;
 				try {
 					String id = "1";
 					store1 = BusinessObjectDAO.getInstance().read(id);
-					employee1 = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username));
+					employee1 = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", usernameToWorkWith));
 				} catch (Exception e9) {
 					System.out.println("Get Store and Employee failed");
 				}
