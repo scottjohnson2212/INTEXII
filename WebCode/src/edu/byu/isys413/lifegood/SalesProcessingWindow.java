@@ -103,6 +103,7 @@ public class SalesProcessingWindow {
 	public void createContents(final Employee employee, final Store store) {
 
 		shell = new Shell(SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX | SWT.APPLICATION_MODAL);
+		shell.setSize(856, 434);
 		shell.setLayout(new BorderLayout(0, 0));
 
 		Composite composite_1 = new Composite(shell, SWT.NONE);

@@ -25,6 +25,9 @@ public class Employee extends BusinessObject {
     private Double salary = null;
     @BusinessObjectField
     private String username = null;
+    @BusinessObjectField
+    private String password = null;
+    
     
     //Commission Variable
     
@@ -192,6 +195,21 @@ public class Employee extends BusinessObject {
 	 */
 	public void setUsername(String username) {
 		this.username = username;
+		this.setDirty();
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 		this.setDirty();
 	}
 
