@@ -43,7 +43,7 @@ public class AddProducts {
 	public static void main(String[] args) {
 		try {
 			AddProducts window = new AddProducts();
-			window.open();
+			window.open(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,9 +52,9 @@ public class AddProducts {
 	/**
 	 * Open the window.
 	 */
-	public void open() {
+	public void open(Store store) {
 		Display display = Display.getDefault();
-		createContents(null);
+		createContents(store);
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -72,7 +72,6 @@ public class AddProducts {
 	 * @return 
 	 */
 	public void createContents(final Store store) {
-//		super(display, SWT.SHELL_TRIM);
 		shell = new Shell(SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX | SWT.APPLICATION_MODAL);
 		shell.setSize(450, 336);
 		shell.setLayout(new BorderLayout(0, 0));

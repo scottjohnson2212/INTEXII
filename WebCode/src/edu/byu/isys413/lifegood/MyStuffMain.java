@@ -47,6 +47,8 @@ public class MyStuffMain {
 		} catch (Exception e) {
 			System.out.println("Get Store and Employee failed");
 		}
+		
+		final Store storeToWorkWith = store;
 
 		Label lblLogInInfo = new Label(shlMyStuffSystem, SWT.NONE);
 		lblLogInInfo.setAlignment(SWT.RIGHT);
@@ -62,9 +64,11 @@ public class MyStuffMain {
 		employeeName.setText(employee.getFirstname());
 
 		Button empStoreButton = new Button(shlMyStuffSystem, SWT.NONE);
+		final AddStores as = new AddStores();
 		empStoreButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				as.open();
 			}
 		});
 		empStoreButton.setLayoutData(new RowData(183, 89));
@@ -75,7 +79,7 @@ public class MyStuffMain {
 		productsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ap.open();
+				ap.open(storeToWorkWith);
 			}
 		});
 		productsButton.setLayoutData(new RowData(183, 89));
