@@ -8,11 +8,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Text;
+import swing2swt.layout.BorderLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Label;
 
 public class AddStores {
 
 	protected Shell shell;
-	private Text TextTime;
+	private Text text;
 
 	/**
 	 * Launch the application.
@@ -49,21 +52,30 @@ public class AddStores {
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
+		shell.setLayout(new BorderLayout(0, 0));
 		
 		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setBounds(122, 55, 64, 64);
+		composite.setLayoutData(BorderLayout.WEST);
+		composite.setLayout(new RowLayout(SWT.VERTICAL));
 		
-		Button btnNewButton = new Button(shell, SWT.NONE);
+		Composite composite_2 = new Composite(composite, SWT.NONE);
+		composite_2.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		Label lblStore = new Label(composite_2, SWT.NONE);
+		lblStore.setText("Store:");
+		
+		text = new Text(composite_2, SWT.BORDER);
+		
+		Button btnNewButton = new Button(composite, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(242, 116, 75, 25);
 		btnNewButton.setText("New Button");
 		
-		TextTime = new Text(shell, SWT.BORDER);
-		TextTime.setBounds(126, 155, 76, 21);
+		Composite composite_1 = new Composite(shell, SWT.NONE);
+		composite_1.setLayoutData(BorderLayout.EAST);
 
 	}
 }

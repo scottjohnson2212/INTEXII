@@ -38,7 +38,7 @@ public class MyStuffMain {
 		Store store = null;
 		Employee employee = null;
 
-		String username = LDAP.loginLDAPByu();
+		final String username = LDAP.loginLDAPByu();
 
 		try {
 			String id = "1";
@@ -71,13 +71,11 @@ public class MyStuffMain {
 		empStoreButton.setText("Employee / Store");
 
 		Button productsButton = new Button(shlMyStuffSystem, SWT.NONE);
-		final AddProducts ap = new AddProducts(display, store);
+		final AddProducts ap = new AddProducts();
 		productsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				shlMyStuffSystem.close();
 				ap.open();
-				
 			}
 		});
 		productsButton.setLayoutData(new RowData(183, 89));
@@ -85,12 +83,22 @@ public class MyStuffMain {
 
 		Button salesButton = new Button(shlMyStuffSystem, SWT.NONE);
 
-		final SalesProcessingWindow spw = new SalesProcessingWindow(display, employee, store);
+		final SalesProcessingWindow spw = new SalesProcessingWindow();
 		salesButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				spw.open();
+				
+				Store store1 = null;
+				Employee employee1 = null;
+				try {
+					String id = "1";
+					store1 = BusinessObjectDAO.getInstance().read(id);
+					employee1 = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username));
+				} catch (Exception e9) {
+					System.out.println("Get Store and Employee failed");
+				}
+				spw.open(store1, employee1);
 			}
 		});
 		salesButton.setLayoutData(new RowData(183, 89));

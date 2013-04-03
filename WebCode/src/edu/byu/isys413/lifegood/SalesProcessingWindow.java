@@ -31,7 +31,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 
-public class SalesProcessingWindow extends Shell {
+public class SalesProcessingWindow {
+
+	protected Shell shell;
 	private Text textEmployee;
 	private Text textStore;
 	private Text textFirstName;
@@ -64,16 +66,46 @@ public class SalesProcessingWindow extends Shell {
 	private Table table;
 
 	/**
+	 * Launch the application.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		try {
+			SalesProcessingWindow window = new SalesProcessingWindow();
+			window.open(null, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Open the window.
+	 */
+	public void open(Store store, Employee employee) {
+		Display display = Display.getDefault();
+		createContents(employee, store);
+		shell.open();
+		shell.layout();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	/**
 	 * Create the shell.
 	 * 
 	 * @param display
+	 * @return
 	 */
-	public SalesProcessingWindow(Display display, final Employee employee, final Store store) {
+	public void createContents(final Employee employee, final Store store) {
 
-		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
-		setLayout(new BorderLayout(0, 0));
+		shell = new Shell(SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX | SWT.APPLICATION_MODAL);
+		shell.setLayout(new BorderLayout(0, 0));
 
-		Composite composite_1 = new Composite(this, SWT.NONE);
+		Composite composite_1 = new Composite(shell, SWT.NONE);
 		composite_1.setLayoutData(BorderLayout.EAST);
 		composite_1.setLayout(new RowLayout(SWT.VERTICAL));
 
@@ -202,7 +234,7 @@ public class SalesProcessingWindow extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				trans.finishAndPay();
-				
+
 				textSearchParam.setText("");
 				textFirstName.setText("");
 				textMiddleName.setText("");
@@ -213,7 +245,7 @@ public class SalesProcessingWindow extends Shell {
 				textPhone.setText("");
 				textEmail.setText("");
 				textAddress.setText("");
-				
+
 				RevenueSourceList.clear();
 				tableViewer.refresh();
 				textSubTotal.setText("");
@@ -225,7 +257,7 @@ public class SalesProcessingWindow extends Shell {
 		finishAndPayButton.setLayoutData(new RowData(84, SWT.DEFAULT));
 		finishAndPayButton.setText("Finish and Pay");
 
-		Composite composite_2 = new Composite(this, SWT.NONE);
+		Composite composite_2 = new Composite(shell, SWT.NONE);
 		composite_2.setLayoutData(BorderLayout.NORTH);
 		composite_2.setLayout(new RowLayout(SWT.HORIZONTAL));
 
@@ -246,7 +278,7 @@ public class SalesProcessingWindow extends Shell {
 		textEmployee.setEnabled(false);
 		textEmployee.setText(employee.getFirstname());
 
-		Composite composite = new Composite(this, SWT.NO_REDRAW_RESIZE);
+		Composite composite = new Composite(shell, SWT.NO_REDRAW_RESIZE);
 		composite.setLayoutData(BorderLayout.WEST);
 		RowLayout rl_composite = new RowLayout(SWT.VERTICAL);
 		rl_composite.spacing = 2;
@@ -364,7 +396,7 @@ public class SalesProcessingWindow extends Shell {
 		textSKU = new Text(composite_20, SWT.BORDER);
 		textSKU.setLayoutData(new RowData(121, SWT.DEFAULT));
 
-		Composite composite_7 = new Composite(this, SWT.NONE);
+		Composite composite_7 = new Composite(shell, SWT.NONE);
 		composite_7.setLayoutData(BorderLayout.CENTER);
 		composite_7.setLayout(new RowLayout(SWT.HORIZONTAL));
 
@@ -708,12 +740,11 @@ public class SalesProcessingWindow extends Shell {
 		btnReturnToMain.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				close();
+				shell.close();
 
 			}
 		});
 		btnReturnToMain.setText("Return To Main");
-		createContents();
 	}
 
 	/**
@@ -732,17 +763,4 @@ public class SalesProcessingWindow extends Shell {
 		return customer;
 	}
 
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText("My Stuff System");
-		setSize(779, 474);
-
-	}
-
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
-	}
 }

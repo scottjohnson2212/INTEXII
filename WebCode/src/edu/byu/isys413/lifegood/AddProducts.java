@@ -16,7 +16,10 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-public class AddProducts extends Shell {
+public class AddProducts {
+	protected Shell shell;
+	
+	
 	private Text cpName;
 	private Text cpDescription;
 	private Text cpManufacturer;
@@ -34,15 +37,46 @@ public class AddProducts extends Shell {
 	private Text ppPrice;
 
 	/**
+	 * Launch the application.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		try {
+			AddProducts window = new AddProducts();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Open the window.
+	 */
+	public void open() {
+		Display display = Display.getDefault();
+		createContents(null);
+		shell.open();
+		shell.layout();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+	
+	
+	/**
 	 * Create the shell.
 	 * 
 	 * @param display
+	 * @return 
 	 */
-	public AddProducts(Display display, final Store store) {
-		super(display, SWT.SHELL_TRIM);
-		setLayout(new BorderLayout(0, 0));
+	public void createContents(final Store store) {
+//		super(display, SWT.SHELL_TRIM);
+		shell = new Shell(SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX | SWT.APPLICATION_MODAL);
+		shell.setLayout(new BorderLayout(0, 0));
 
-		Composite composite_1 = new Composite(this, SWT.NONE);
+		Composite composite_1 = new Composite(shell, SWT.NONE);
 		composite_1.setLayoutData(BorderLayout.SOUTH);
 		composite_1.setLayout(new RowLayout(SWT.HORIZONTAL));
 
@@ -113,9 +147,7 @@ public class AddProducts extends Shell {
 		btnReturnToMain.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Shell shell = new Shell(SWT.APPLICATION_MODAL);
-				shell.open();
-				close();
+				shell.close();
 			}
 		});
 		btnReturnToMain.setText("Return To Main");
@@ -191,7 +223,7 @@ public class AddProducts extends Shell {
 		});
 		btnAddPhysicalProduct.setText("Add Physical Product");
 
-		Composite composite_2 = new Composite(this, SWT.NONE);
+		Composite composite_2 = new Composite(shell, SWT.NONE);
 		composite_2.setLayoutData(BorderLayout.WEST);
 		RowLayout rl_composite_2 = new RowLayout(SWT.VERTICAL);
 		rl_composite_2.center = true;
@@ -256,7 +288,7 @@ public class AddProducts extends Shell {
 
 		cpPrice = new Text(composite_17, SWT.BORDER);
 
-		Composite composite_3 = new Composite(this, SWT.NONE);
+		Composite composite_3 = new Composite(shell, SWT.NONE);
 		composite_3.setLayoutData(BorderLayout.EAST);
 		RowLayout rl_composite_3 = new RowLayout(SWT.VERTICAL);
 		rl_composite_3.center = true;
@@ -328,20 +360,5 @@ public class AddProducts extends Shell {
 		lblPrice_1.setText("Price: ");
 
 		ppPrice = new Text(composite_18, SWT.BORDER);
-		createContents();
-	}
-
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText("SWT Application");
-		setSize(450, 414);
-
-	}
-
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
 	}
 }
