@@ -105,7 +105,6 @@ public class FinishTransaction implements Action{
 		
 		//Call Finish and Pay
 		
-		
 		try{
 		trans.finishAndPay();
 		}catch(Exception e){

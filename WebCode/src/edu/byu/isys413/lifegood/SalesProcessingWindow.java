@@ -573,6 +573,8 @@ public class SalesProcessingWindow {
 					P = BusinessObjectDAO.getInstance().searchForBO("Product", new SearchCriteria("id", PP.getId()));
 					CP = BusinessObjectDAO.getInstance().searchForBO("ConceptualProduct", new SearchCriteria("id", PP.getConceptualproductid()));
 					ConcRen = (ConceptualRental) BusinessObjectDAO.getInstance().searchForBO("ConceptualRental", new SearchCriteria("id", CP.getId()));
+
+					// ///// REGULAR PURCHASE for USED PRODUCT
 					if (PP.getType() == "For Sale") {
 
 						if (PP.getStoreid().equals(store.getId())) {
@@ -605,8 +607,9 @@ public class SalesProcessingWindow {
 							throw new Exception();
 						}
 
-					} else {
-						// This is a Rental
+					} else{
+						
+// /////////////////////// This is a Rental//////////////////////////////////////////////////////
 
 						SP = null;
 						RevenueSource RS = null;
@@ -621,15 +624,21 @@ public class SalesProcessingWindow {
 						Ren.setForrentid(forrent.getId());
 						Ren.setDateout(today);
 
+						// Username Dialog
+						Shell shell = new Shell();
+						InputDialog message = new InputDialog(shell, "Rental Information", "Please Enter Number of Days to be Rented", "10", null);
+						message.open();
+						int numberOfDaysToRent = Integer.parseInt(message.getValue());
+
 						// get date due
 						Date datein = new Date();
-						datein.setDate(today.getDay() + 5);
+						datein.setDate(today.getDay() + numberOfDaysToRent);
 
 						Ren.setDatein(datein);
 						Ren.setWorkordernumber(null);
 						Ren.setRemindersent(false);
 						// set RS values
-						RS.setAmount(ConcRen.getPriceperday() * 5);
+						RS.setAmount(ConcRen.getPriceperday() * numberOfDaysToRent);
 						RS.setType("rental");
 						RS.rentalList.add(Ren);
 

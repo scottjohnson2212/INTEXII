@@ -3,9 +3,6 @@
   <jsp:param name="homepage" value="MyStuff Online" />
 </jsp:include>
 
-	<%CreateDB.main(null); %>
-
-
 <div id="menu">
           <ul>                                        
               <li><a class="current" href="index.jsp" title="">Home</a></li>

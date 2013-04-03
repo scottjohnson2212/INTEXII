@@ -18,13 +18,16 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.text.TextViewer;
-
+import org.eclipse.swt.widgets.Composite;
+/**
+ * My Stuff Main Method
+ */
 public class MyStuffMain {
 	private static Text storeName;
 	private static Text employeeName;
 
 	/**
-	 * Main Page of Buttons
+	 * Main Page with buttons to get to Office Functions
 	 * 
 	 * @param args
 	 */
@@ -62,29 +65,28 @@ public class MyStuffMain {
 			if (JOptionPane.showOptionDialog(null, obj, "Need password", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, stringArray, obj) == JOptionPane.YES_OPTION)
 				;
 			String password = new String(passwordField.getPassword());
-
-			try {
-				String id = "1";
-				store = BusinessObjectDAO.getInstance().read(id);
+			
+			try {			
+				int id = 1 + (int)(Math.random() * ((3 - 1) + 1));
+				store = BusinessObjectDAO.getInstance().read(Integer.toString(id));
 				employee = BusinessObjectDAO.getInstance().searchForBO("Employee", new SearchCriteria("username", username), new SearchCriteria("password", password));
-				
-				if(store == null || employee == null){
+
+				if (store == null || employee == null) {
 					Shell shell2 = new Shell();
-					MessageBox message2 = new MessageBox(shell, SWT.ICON_WARNING);
+					MessageBox message2 = new MessageBox(shell2, SWT.ICON_WARNING);
 					message2.setText("Warning");
-					message2.setMessage("You must fill in all fields");
+					message2.setMessage("Username or Password Incorrect Try Again");
 					message2.open();
-				}else{
+				} else {
 					break;
 				}
-				
-				
+
 			} catch (Exception e) {
 				Shell shell1 = new Shell();
-				MessageBox message1 = new MessageBox(shell, SWT.ICON_WARNING);
-				message1.setText("Warning");
-				message1.setMessage("Login Failed Please Try Again");
-				message1.open();
+				MessageBox message11 = new MessageBox(shell, SWT.ICON_WARNING);
+				message11.setText("Warning");
+				message11.setMessage("Login Failed Please Try Again");
+				message11.open();
 			}
 		}
 
@@ -223,6 +225,26 @@ public class MyStuffMain {
 		});
 		tenDayLate.setLayoutData(new RowData(180, 79));
 		tenDayLate.setText("10 Day Late Charges");
+		
+		Composite composite = new Composite(shlMyStuffSystem, SWT.NONE);
+		composite.setLayoutData(new RowData(182, 80));
+		
+		Composite composite_1 = new Composite(shlMyStuffSystem, SWT.NONE);
+		RowLayout rl_composite_1 = new RowLayout(SWT.HORIZONTAL);
+		rl_composite_1.marginLeft = 250;
+		composite_1.setLayout(rl_composite_1);
+		composite_1.setLayoutData(new RowData(364, 29));
+		
+		Button btnExit = new Button(composite_1, SWT.NONE);
+		btnExit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.exit(0);
+				
+			}
+		});
+		btnExit.setLayoutData(new RowData(97, SWT.DEFAULT));
+		btnExit.setText("Exit");
 
 		shlMyStuffSystem.open();
 		shlMyStuffSystem.layout();

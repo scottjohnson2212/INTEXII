@@ -30,7 +30,7 @@ public class PurchasePage implements Action{
 		StoreProduct SP = BusinessObjectDAO.getInstance().searchForBO("StoreProduct", new SearchCriteria("storeid", STR.getId()), new SearchCriteria("conceptualproductid",CP.getId()));
 		//get physical product Options for purchase
 		
-		List<BusinessObject> BOs = BusinessObjectDAO.getInstance().searchForList("PhysicalProduct", new SearchCriteria("conceptualproductid", CP.getId()), new SearchCriteria("storeid", STR.getId()));
+		List<BusinessObject> BOs = BusinessObjectDAO.getInstance().searchForList("PhysicalProduct", new SearchCriteria("conceptualproductid", CP.getId()), new SearchCriteria("storeid", STR.getId()), new SearchCriteria("status", "Active"));
 		
 		ArrayList<PhysicalProduct> PPs = new ArrayList<PhysicalProduct>();
 		for(int i=0; i < BOs.size(); i++){
