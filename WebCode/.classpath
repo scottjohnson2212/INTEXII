@@ -30,5 +30,7 @@
 	<classpathentry kind="lib" path="org.eclipse.text_3.5.200.v20120523-1310.jar"/>
 	<classpathentry kind="lib" path="org.eclipse.ui.forms_3.5.200.v20120705-114351.jar"/>
 	<classpathentry kind="lib" path="org.eclipse.ui.workbench_3.103.1.v20120906-120042.jar"/>
+	<classpathentry kind="lib" path="javax.servlet_3.0.0.v201112011016.jar"/>
+	<classpathentry kind="lib" path="javax.servlet.jsp_2.2.0.v201112011158.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
